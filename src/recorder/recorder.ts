@@ -63,7 +63,6 @@ export async function startScreenRecording() {
 }
 
 export async function startScreenRecordingWithAudio(recordingControl: RecordingControl) {
-    recordingState.set(true);
     const startDate = new Date();
 
     // Solicitar acceso para capturar la pantalla y el audio del micrófono
@@ -74,6 +73,10 @@ export async function startScreenRecordingWithAudio(recordingControl: RecordingC
     const userMediaStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
     });
+
+    console.log("Recording with audio started");
+
+    recordingState.set(true);
 
     // Crear un MediaRecorder para grabar el stream combinado
     const displayMediaRecorder = new MediaRecorder(displayMediaStream);
