@@ -4,7 +4,8 @@ import { recordsListVersionState } from "./list-records-state";
 
 export const recordsListState = atom<RecordDTO[] | null>(null);
 recordsListVersionState.subscribe(() => {
-    Array.fromAsync(recording.list()).then((records) => {
-        recordsListState.set(records);
-    });
+    Array.fromAsync(recording.list())
+        .then((records) => {
+            recordsListState.set(records);
+        });
 })
