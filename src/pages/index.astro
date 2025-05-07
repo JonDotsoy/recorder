@@ -1,63 +1,18 @@
 ---
-import { RecordController } from '../components/record-controller.jsx';
-import '../styles/global.css';
+import { RecordController } from "../components/record-controller.jsx";
+import { RecordList } from "../components/records-list";
+import "../styles/global.css";
 ---
 
 <script>
-	import { recording, type RecordDTO } from "../recorder/db";
-	import {
-		startScreenRecordingWithAudio,
-		createRecordingControl,
-	} from "../recorder/recorder";
-	import {
-		$,
-		onClick,
-		addClass,
-		removeClass,
-		setAttribute,
-		removeAttribute,
-	} from "../components/x-button";
-	import { atom } from "nanostores";
+	import { recordingState } from "../components/recordingState";
 
-	const recordingState = atom({
-		recording: false,
+	const originalTitle = document.title;
+
+	recordingState.subscribe((recording) => {
+		document.title = recording ? "grabando...." : originalTitle;
 	});
-
-	const recordingsState = atom<RecordDTO[]>([]);
-
-	const recordingControl = createRecordingControl();
-
-	onClick($(`#btn-record`), async () => {
-		recordingState.set({ recording: true });
-		setAttribute($(`#btn-record`), "recording", "true");
-		await startScreenRecordingWithAudio(recordingControl);
-		removeAttribute($(`#btn-record`), "recording");
-		recordingState.set({ recording: false });
-	});
-
-	onClick($(`#btn-stop`), async () => {
-		await recordingControl.stop();
-	});
-
-	recordingsState.subscribe((records) => {
-		records.forEach((record) => {
-			const li = document.createElement("li");
-			li.innerText = record.key;
-			$(`#recordings-list`)!.appendChild(li);
-		});
-	});
-
-	recordingsState.set(await Array.fromAsync(recording.list()));
 </script>
-
-<style>
-	#btn-record::before {
-		content: "grabar";
-	}
-	#btn-record[recording]::before {
-		content: "grabando";
-	}
-</style>
 
 <html lang="en">
 	<head>
@@ -68,8 +23,10 @@ import '../styles/global.css';
 		<title>Astro</title>
 	</head>
 	<body>
-		<RecordController client:only></RecordController>
+		<div class="p-4">
+			<RecordController client:only />
+		</div>
 
-		<ul id="recordings-list"></ul>
+		<RecordList client:only />
 	</body>
 </html>

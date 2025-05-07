@@ -3,6 +3,7 @@ import { recordingState } from "./recordingState";
 import { createRecordingControl, startScreenRecordingWithAudio, type RecordingControl } from "../recorder/recorder";
 import { atom } from "nanostores";
 import { useCallback } from "react";
+import { recordsListVersionState } from "./list-records-state";
 
 export const recordingControlState = atom<null | RecordingControl>(null);
 
@@ -17,7 +18,11 @@ export const RecordController = () => {
         }
         const newRecordingControl = createRecordingControl();
         recordingControlState.set(newRecordingControl);
-        startScreenRecordingWithAudio(newRecordingControl).catch(err => console.error(err));
+        startScreenRecordingWithAudio(newRecordingControl)
+            .catch(err => console.error(err))
+            .finally(()=>{
+                recordsListVersionState.set(Date.now());
+            });
     }, [recording, recordingControl]);
 
     return (
