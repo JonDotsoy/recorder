@@ -1,4 +1,5 @@
 import { recordingState } from "../components/recordingState";
+import { storingRecordState } from "../components/storing-record.state";
 import {  recording } from "./db";
 
 export type RecordingControl = ReturnType<typeof createRecordingControl>;
@@ -77,6 +78,7 @@ export async function startScreenRecordingWithAudio(recordingControl: RecordingC
     console.log("Recording with audio started");
 
     recordingState.set(true);
+    storingRecordState.set(false);
 
     // Crear un MediaRecorder para grabar el stream combinado
     const displayMediaRecorder = new MediaRecorder(displayMediaStream);
@@ -104,6 +106,7 @@ export async function startScreenRecordingWithAudio(recordingControl: RecordingC
     console.log('Recording with audio started');
 
     const status = await recordingControl.stopped;
+    storingRecordState.set(true);
 
     if (status === 'aborted') {
         console.log('Recording aborted');
@@ -114,14 +117,15 @@ export async function startScreenRecordingWithAudio(recordingControl: RecordingC
 
     await Promise.all([
         new Promise<void>(resolve => {
-            displayMediaRecorder.onstop = () => { resolve() };
+            displayMediaRecorder.addEventListener("stop", ()=>{resolve()});
             displayMediaRecorder.stop();
         }),
         new Promise<void>(resolve => {
-            userMediaRecorder.onstop = () => { resolve() };
+            userMediaRecorder.addEventListener("stop", ()=>{resolve()});
             userMediaRecorder.stop();
         }),
     ])
+
 
     await recording.create({
         key: `${startDate.toISOString()}-displaymedia.webm`,
@@ -134,6 +138,9 @@ export async function startScreenRecordingWithAudio(recordingControl: RecordingC
         timestamp: startDate.getTime(),
         data: new Blob(userMediaChunks, { type: 'video/webm' }),
     })
+
+    storingRecordState.set(false);
+    console.log('Recording with audio stopped');
 
     // const displayMediaBlob = new Blob(displayMediaChunks, { type: 'video/webm' });
     // const displayMediaUrl = URL.createObjectURL(displayMediaBlob);
