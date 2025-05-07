@@ -107,6 +107,17 @@ export const RecordList = () => {
         URL.revokeObjectURL(a.href);
     }
 
+    const p = (key: string) => {
+        const record = records?.find((record) => record.key === key);
+        if (!record) return;
+        const { data } = record;
+        const u = URL.createObjectURL(new Blob([data], { type: data.type }));
+        window.open(u, '_blank');
+        setTimeout(() => {
+            URL.revokeObjectURL(u);
+        }, 10_000);
+    }
+
     const d = (key: string) => {
         confirm('¿Estás seguro de que quieres eliminar este registro?');
     }
@@ -122,6 +133,7 @@ export const RecordList = () => {
                     </div>
                     <div className="p-4 flex flex-col gap-2">
                         <button className="border px-4 py-1 rounded hover:shadow cursor-pointer" onClick={() => h(record.key)}>Download</button>
+                        <button className="border px-4 py-1 rounded hover:shadow cursor-pointer" onClick={() => p(record.key)}>Play</button>
                         <button className="border px-4 py-1 rounded hover:shadow cursor-pointer" onClick={() => d(record.key)}>Eliminar</button>
                     </div>
                 </div>
