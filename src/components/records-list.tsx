@@ -138,6 +138,11 @@ export const RecordList = () => {
                     </div>
                 </div>
             ))}
+            {records?.length === 0 && (
+                <div className="p-4">
+                    <p className="text-gray-500">No hay grabaciones disponibles.</p>
+                </div>
+            )}
         </div>
     )
 }
