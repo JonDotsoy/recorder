@@ -112,7 +112,7 @@ export const RecordList = () => {
     }
 
     return (
-        <div className="">
+        <div className="container mx-auto p-4">
             {records?.sort((a, b) => b.timestamp - a.timestamp)?.map((record) => (
                 <div className="grid grid-cols-[1fr_auto] gap-4 border-b border-gray-200" key={record.key}>
                     <div key={record.key} className="flex flex-col gap-2 p-4">
