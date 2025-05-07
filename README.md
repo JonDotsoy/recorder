@@ -2,7 +2,7 @@
 
 Recorder is a web-based project designed to record various data sources, such as screen and microphone audio. It is intended to make it easy to record meetings or videos directly from the browser. You can view a demo of the project at [jondotsoy.github.io/recorder/](https://jondotsoy.github.io/recorder/). Additionally, the project stores videos and audio locally in the browser, making it simple to access your recordings later.
 
-![Demo Image](docs/assets/demo-1.png)
+[![Demo Image](docs/assets/demo-1.png)](https://jondotsoy.github.io/recorder/)
 
 ## Setup
 
