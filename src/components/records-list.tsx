@@ -16,8 +16,13 @@ class BytesFormat {
 
   constructor(
     locale: string | undefined = undefined,
-    options: BytesFormatOptions | undefined = undefined,
+    optionsInit: BytesFormatOptions | undefined = undefined,
   ) {
+    const options: BytesFormatOptions = {
+      ...optionsInit,
+      maximumFractionDigits: optionsInit?.maximumFractionDigits ?? 2,
+    };
+
     this.#byteFormatter = new Intl.NumberFormat(locale, {
       style: "unit",
       unit: "byte",
