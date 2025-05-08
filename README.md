@@ -12,13 +12,13 @@ It is recommended to use [Bun](https://bun.sh) as the JavaScript runtime for thi
 
 1. Install Bun by following the instructions at [bun.sh](https://bun.sh).
 2. Install the project dependencies:
-    ```bash
-    bun install
-    ```
+   ```bash
+   bun install
+   ```
 3. Start the development server:
-    ```bash
-    bun dev
-    ```
+   ```bash
+   bun dev
+   ```
 
 ## LICENSE
 
