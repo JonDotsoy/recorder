@@ -9,6 +9,7 @@ import { atom } from "nanostores";
 import { useCallback, useState } from "react";
 import { recordsListVersionState } from "./list-records-state";
 import { storingRecordState } from "./storing-record.state";
+import { InputSyncState } from "./input-sync-state";
 
 export const recordingControlState = atom<null | RecordingControl>(null);
 
@@ -39,8 +40,8 @@ export const RecordController = () => {
   }, [recording, recordingControl]);
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="p-4">
+    <div className="container mx-auto py-4 px-8 md:grid md:grid-cols-[1fr_auto] md:gap-4">
+      <div className="">
         <button
           className="border px-4 py-2 rounded cursor-pointer"
           disabled={storing}
@@ -51,6 +52,9 @@ export const RecordController = () => {
         {error && <p className="text-red-500 mt-2">{error}</p>}
         {recording && <p className="text-green-500 mt-2">Grabando...</p>}
         {storing && <p className="text-yellow-500 mt-2">Almacenando...</p>}
+      </div>
+      <div>
+        <InputSyncState></InputSyncState>
       </div>
     </div>
   );

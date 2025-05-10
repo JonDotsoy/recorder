@@ -1,8 +1,11 @@
 import { useStore } from "@nanostores/react";
-import { recordsListState } from "./recordsListState";
-import { BytesFormat } from "./utils/bytes-format";
+import { recordsListState } from "../recordsListState.js";
+import { BytesFormat } from "../utils/bytes-format.js";
+import { serviceAvailabilityState } from "../../backup-service/states/service-availability.js";
+import { BackupButton } from "./backup-button.js";
 
 export const RecordList = () => {
+  const isServiceAvailability = useStore(serviceAvailabilityState);
   const records = useStore(recordsListState);
 
   const h = (key: string) => {
@@ -75,6 +78,7 @@ export const RecordList = () => {
               >
                 Eliminar
               </button>
+              <BackupButton key={record.key} record={record} />
             </div>
           </div>
         ))}

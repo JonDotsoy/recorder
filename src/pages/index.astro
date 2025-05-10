@@ -1,11 +1,12 @@
 ---
-import { RecordController } from "../components/record-controller.jsx";
-import { RecordList } from "../components/records-list";
 import "../styles/global.css";
+import { RecordController } from "../components/record-controller.jsx";
+import { RecordList } from "../components/records-list/records-list.js";
 ---
 
 <script>
-  import { recordingState } from "../components/recordingState";
+  import "../backup-service/states/ping-subscription.js";
+  import { recordingState } from "../components/recordingState.js";
 
   const originalTitle = document.title;
 

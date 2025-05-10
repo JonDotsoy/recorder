@@ -1,9 +1,4 @@
-export type RecordDTO = {
-  key: string;
-  name?: string | undefined;
-  timestamp: number;
-  data: Blob;
-};
+import type { RecordDTO } from "./dtos/record-dto.js";
 
 export const initializeDatabase = async () => {
   return new Promise<IDBDatabase>((resolve, reject) => {
