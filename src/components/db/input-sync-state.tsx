@@ -1,8 +1,8 @@
 import { useStore } from "@nanostores/react";
-import { updateUrl } from "../backup-service/states/updateUrl";
-import { syncing as syncingState } from "../backup-service/states/syncing";
-import { serviceAvailabilityState as serviceAvailabilityState } from "../backup-service/states/service-availability";
-import { serviceURL as urlState } from "../backup-service/states/service-url";
+import { updateUrl } from "../../backup-service/states/updateUrl.js";
+import { syncing as syncingState } from "../../backup-service/states/syncing.js";
+import { serviceAvailabilityState as serviceAvailabilityState } from "../../backup-service/states/service-availability.js";
+import { serviceURL as urlState } from "../../backup-service/states/service-url.js";
 import classNames from "classnames";
 
 export const InputSyncState = () => {
@@ -17,7 +17,7 @@ export const InputSyncState = () => {
           type="text"
           className="border px-4 py-2 rounded w-full"
           placeholder="URL del servicio de respaldo"
-          defaultValue={url ?? ""}
+          defaultValue={url?.toString() ?? ""}
           onChange={(e) => {
             updateUrl(e.target.value);
           }}
