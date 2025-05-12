@@ -1,15 +1,15 @@
 import { useStore } from "@nanostores/react";
-import { recordingState } from "./recordingState";
+import { recordingState } from "./states/recording-state.js";
 import {
   createRecordingControl,
   startScreenRecordingWithAudio,
   type RecordingControl,
-} from "./recorder/recorder";
+} from "./recorder/recorder.js";
 import { atom } from "nanostores";
 import { useCallback, useState } from "react";
-import { recordsListVersionState } from "./list-records-state";
-import { storingRecordState } from "./storing-record.state";
-import { InputSyncState } from "./input-sync-state";
+import { recordsListVersionState } from "./list-records-state.js";
+import { storingRecordState } from "./states/storing-record.state.js";
+import { InputSyncState } from "./db/input-sync-state.js";
 import { Button } from "@/components/ui/button";
 import { Loader2, Circle } from "lucide-react";
 

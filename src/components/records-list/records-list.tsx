@@ -1,5 +1,5 @@
 import { useStore } from "@nanostores/react";
-import { recordsListState } from "../recordsListState.js";
+import { recordsListState } from "../states/records-list-state.js";
 import { BytesFormat } from "@jondotsoy/utils-js/bytes-format";
 import { serviceAvailabilityState } from "../../backup-service/states/service-availability.js";
 import { BackupButton } from "./backup-button.js";

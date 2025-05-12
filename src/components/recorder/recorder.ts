@@ -1,6 +1,6 @@
-import { recordingState } from "../recordingState";
-import { storingRecordState } from "../storing-record.state";
-import { recording } from "../db";
+import { recordingState } from "../states/recording-state";
+import { storingRecordState } from "../states/storing-record.state";
+import { recording } from "../db/models/recording";
 
 export type RecordingControl = ReturnType<typeof createRecordingControl>;
 
