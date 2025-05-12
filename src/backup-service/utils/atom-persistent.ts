@@ -1,7 +1,6 @@
 import { atom } from "nanostores";
 import { persistent } from "./persistent";
 
-
 /**
  * Creates a persistent Recoil atom that synchronizes its state with a persistent storage.
  *
@@ -22,10 +21,13 @@ import { persistent } from "./persistent";
  * ```
  */
 export const atomPersistent = <T = any>(key: string, initialValue: T) => {
-    const persistentStore = persistent<T>(key);
-    const storedValue = persistentStore.get() ?? initialValue;
-    console.debug(`[atomPersistent] Start persistent store with key: ${key} and initial value:`, storedValue);
-    const state = atom<T>(storedValue);
-    persistentStore.subscribeAtom(state);
-    return state;
+  const persistentStore = persistent<T>(key);
+  const storedValue = persistentStore.get() ?? initialValue;
+  console.debug(
+    `[atomPersistent] Start persistent store with key: ${key} and initial value:`,
+    storedValue,
+  );
+  const state = atom<T>(storedValue);
+  persistentStore.subscribeAtom(state);
+  return state;
 };

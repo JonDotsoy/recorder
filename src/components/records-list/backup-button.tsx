@@ -3,12 +3,13 @@ import { useState, type FC } from "react";
 import { serviceAvailabilityState } from "../../backup-service/states/service-availability.js";
 import type { RecordDTO } from "../dtos/record-dto.js";
 import { syncContent } from "../../backup-service/controllers/push-media.js";
+import { Button } from "@/components/ui/button.js";
 
 enum BackupStatus {
   PENDING,
   IN_PROGRESS,
   READY,
-  ERROR
+  ERROR,
 }
 
 /**
@@ -30,9 +31,11 @@ enum BackupStatus {
  * ```
  */
 
-export const BackupButton: FC<{ record: RecordDTO; }> = ({ record }) => {
+export const BackupButton: FC<{ record: RecordDTO }> = ({ record }) => {
   const isServiceAvailability = useStore(serviceAvailabilityState);
-  const [backupReady, setBackupReady] = useState<BackupStatus>(BackupStatus.PENDING);
+  const [backupReady, setBackupReady] = useState<BackupStatus>(
+    BackupStatus.PENDING,
+  );
 
   const f = () => {
     if (backupReady !== BackupStatus.PENDING) {
@@ -46,19 +49,21 @@ export const BackupButton: FC<{ record: RecordDTO; }> = ({ record }) => {
       .catch((error) => {
         console.error("Error syncing content:", error);
         setBackupReady(BackupStatus.ERROR);
-      })
+      });
   };
 
   return (
-    <button
+    <Button
       className="border px-4 py-1 rounded hover:shadow cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       onClick={() => f()}
       disabled={!isServiceAvailability}
+      size={"sm"}
+      variant={"outline"}
     >
       {backupReady === BackupStatus.READY ? "Backup Ready" : "Backup"}
       {backupReady === BackupStatus.IN_PROGRESS && (
         <span className="animate-pulse">...</span>
       )}
-    </button>
+    </Button>
   );
 };

@@ -12,8 +12,8 @@ import { PERSISTENT_MODE_ACTIVED } from "../constants/PERSISTENT_MODE_ACTIVED.js
  *   set: (value: T) => void;
  *   remove: () => void;
  *   subscribeAtom: (atom: ReadableAtom<T>) => () => void;
- * }} 
- * 
+ * }}
+ *
  * An object containing methods to interact with the persistent storage:
  * - `get`: Retrieves the value associated with the key. Returns `null` if the key does not exist or if `PERSISTENT_MODE_ACTIVED` is not enabled.
  * - `set`: Stores a value associated with the key in `localStorage`.
@@ -21,34 +21,32 @@ import { PERSISTENT_MODE_ACTIVED } from "../constants/PERSISTENT_MODE_ACTIVED.js
  * - `subscribeAtom`: Subscribes to changes in a `ReadableAtom` and updates the persistent storage whenever the atom's value changes.
  */
 export const persistent = <T = any>(key: string) => {
-    const get = (): T | null => {
-        if (!PERSISTENT_MODE_ACTIVED) return null;
+  const get = (): T | null => {
+    if (!PERSISTENT_MODE_ACTIVED) return null;
 
-        const value = localStorage.getItem(key);
-        if (value === null) return null;
-        return JSON.parse(value);
-    };
+    const value = localStorage.getItem(key);
+    if (value === null) return null;
+    return JSON.parse(value);
+  };
 
-    const set = (value: T) => {
-        localStorage.setItem(key, JSON.stringify(value));
-    };
+  const set = (value: T) => {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
 
-    const remove = () => {
-        localStorage.removeItem(key);
-    };
+  const remove = () => {
+    localStorage.removeItem(key);
+  };
 
-    const subscribeAtom = (atom: ReadableAtom<T>) => {
-        return atom.listen((value) => {
-            set(value);
-        });
-    };
+  const subscribeAtom = (atom: ReadableAtom<T>) => {
+    return atom.listen((value) => {
+      set(value);
+    });
+  };
 
-    return {
-        get,
-        set,
-        remove,
-        subscribeAtom,
-    };
+  return {
+    get,
+    set,
+    remove,
+    subscribeAtom,
+  };
 };
-
-

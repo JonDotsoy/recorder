@@ -1,4 +1,3 @@
-
 /**
  * A constant indicating whether the persistent mode is activated.
  * When set to `true`, the application operates in persistent mode,
