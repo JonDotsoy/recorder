@@ -60,7 +60,8 @@ export const RecordController = () => {
               size={"sm"}
               variant={"ghost"}
             >
-              <Circle className="stroke-green-500 animate-pulse" /> Iniciar grabación
+              <Circle className="stroke-green-500 animate-pulse" /> Iniciar
+              grabación
             </Button>
           )}
           {storing && (

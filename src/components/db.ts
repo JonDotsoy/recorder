@@ -1,15 +1,28 @@
 import type { RecordDTO } from "./dtos/record-dto.js";
+import type { CheckSyncDTO } from "./dtos/check-sync-dto.js";
+
+const DB_VERSION = 3;
 
 export const initializeDatabase = async () => {
   return new Promise<IDBDatabase>((resolve, reject) => {
-    const idbOpenDBRequest = indexedDB.open("recorderDB", 1);
+    const idbOpenDBRequest = indexedDB.open("recorderDB", DB_VERSION);
 
     idbOpenDBRequest.addEventListener("upgradeneeded", () => {
-      const recordingsObject = idbOpenDBRequest.result.createObjectStore(
-        "recordings",
-        { keyPath: "key" },
-      );
-      recordingsObject.createIndex("key", "key", { unique: true });
+      const db = idbOpenDBRequest.result;
+
+      if (!db.objectStoreNames.contains("recordings")) {
+        const recordingsObject = db.createObjectStore("recordings", {
+          keyPath: "key",
+        });
+        recordingsObject.createIndex("key", "key", { unique: true });
+      }
+
+      if (!db.objectStoreNames.contains("check-sync")) {
+        const checkSyncObject = db.createObjectStore("check-sync", {
+          keyPath: "key",
+        });
+        checkSyncObject.createIndex("key", "key", { unique: true });
+      }
     });
 
     idbOpenDBRequest.addEventListener("success", (event) => {
