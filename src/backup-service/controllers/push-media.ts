@@ -1,5 +1,5 @@
 import { addNotification } from "./add-notification.js";
-import { serviceURL as serviceURLState } from "../states/service-url.js";
+import { serviceURLState as serviceURLState } from "../states/service-url.state.js";
 import type { RecordDTO } from "../../components/dtos/record-dto.js";
 
 export const syncContent = async (record: RecordDTO) => {

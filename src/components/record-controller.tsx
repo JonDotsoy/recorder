@@ -12,6 +12,7 @@ import { storingRecordState } from "./states/storing-record.state.js";
 import { InputSyncState } from "./db/input-sync-state.js";
 import { Button } from "@/components/ui/button";
 import { Loader2, Circle } from "lucide-react";
+import { SyncUrlInput } from "./sync-url-input.js";
 
 export const recordingControlState = atom<null | RecordingControl>(null);
 
@@ -49,7 +50,7 @@ export const RecordController = () => {
   }, [recording, recordingControl]);
 
   return (
-    <div className="container mx-auto py-4 px-4 md:grid md:grid-cols-[1fr_auto] md:gap-4">
+    <div className="container mx-auto py-4 px-4 md:grid md:grid-cols-[1fr_auto] md:gap-4 max-md:grid max-md:grid-cols-[1fr] max-md:gap-2">
       <div className="">
         <div className="flex flex-row gap-2">
           {!recording && !storing && (
@@ -97,7 +98,8 @@ export const RecordController = () => {
         {storing && <p className="text-yellow-500 mt-2">Almacenando...</p>}
       </div>
       <div>
-        <InputSyncState></InputSyncState>
+        {/* <InputSyncState></InputSyncState> */}
+        <SyncUrlInput></SyncUrlInput>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { serviceURL as urlState } from "../states/service-url.js";
+import { serviceURLState as urlState } from "../states/service-url.state.js";
 
 export const ping = async () => {
   const url = urlState.get();

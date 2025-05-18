@@ -1,6 +1,6 @@
 import type { RecordDTO } from "../../components/dtos/record-dto";
 import { addNotification } from "./add-notification";
-import { serviceURL as serviceURLState } from "../states/service-url.js";
+import { serviceURLState as serviceURLState } from "../states/service-url.state.js";
 
 export const transcribeMedia = async (record: RecordDTO) => {
   const serviceURL = serviceURLState.get();

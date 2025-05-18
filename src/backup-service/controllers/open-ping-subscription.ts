@@ -1,5 +1,5 @@
 import { successPing } from "../states/success-ping.js";
-import { serviceURL } from "../states/service-url.js";
+import { serviceURLState } from "../states/service-url.state.js";
 
 type A = string;
 
@@ -21,7 +21,7 @@ export async function* openPingSubscription(
     successPing.set(false);
   });
 
-  serviceURL.subscribe((url) => {
+  serviceURLState.subscribe((url) => {
     successPing.set(false);
     eventSource?.close();
 

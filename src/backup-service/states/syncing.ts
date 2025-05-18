@@ -1,3 +1,3 @@
 import { atom } from "nanostores";
 
-export const syncing = atom<boolean>(false);
+export const syncingState = atom<boolean>(false);

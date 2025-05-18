@@ -2,7 +2,7 @@ import { computed, readonlyType } from "nanostores";
 import { serviceURLWritter } from "./service-url-writter.js";
 import { serviceAvailabilityState } from "./service-availability.js";
 
-export const serviceURL = computed(
+export const serviceURLState = computed(
   [serviceURLWritter, serviceAvailabilityState],
   (serviceURLWritter, serviceAvailabilityState) => {
     if (!serviceAvailabilityState) return null;
