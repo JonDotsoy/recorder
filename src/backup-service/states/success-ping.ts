@@ -1,3 +1,3 @@
 import { atom } from "nanostores";
 
-export const successPing = atom(true);
+export const successPingState = atom(true);

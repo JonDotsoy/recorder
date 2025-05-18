@@ -1,4 +1,4 @@
-import { successPing } from "../states/success-ping.js";
+import { successPingState } from "../states/success-ping.js";
 import { serviceURLState } from "../states/service-url.state.js";
 
 type A = string;
@@ -18,11 +18,12 @@ export async function* openPingSubscription(
   abort?.addEventListener("abort", () => {
     eventSource?.close();
     controller.close();
-    successPing.set(false);
+    successPingState.set(false);
   });
 
   serviceURLState.subscribe((url) => {
-    successPing.set(false);
+    console.log("🚀 ~ serviceURLState.subscribe ~ url:", url);
+    successPingState.set(false);
     eventSource?.close();
 
     if (url === null) {
@@ -36,10 +37,10 @@ export async function* openPingSubscription(
     eventSource = new EventSource(urlPing, {});
     eventSource.addEventListener("ping", (event) => {
       controller.enqueue("ping");
-      successPing.set(true);
+      successPingState.set(true);
     });
     eventSource.addEventListener("error", () => {
-      successPing.set(false);
+      successPingState.set(false);
     });
   });
 

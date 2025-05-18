@@ -5,6 +5,9 @@ import { serviceAvailabilityState as serviceAvailabilityState } from "../../back
 import { serviceURLState as urlState } from "../../backup-service/states/service-url.state.js";
 import classNames from "classnames";
 
+/**
+ * @deprecated
+ */
 export const InputSyncState = () => {
   // const url = useStore(urlState);
   const serviceAvailability = useStore(serviceAvailabilityState);

@@ -9,7 +9,6 @@ import { atom } from "nanostores";
 import { useCallback, useState } from "react";
 import { recordsListVersionState } from "./list-records-state.js";
 import { storingRecordState } from "./states/storing-record.state.js";
-import { InputSyncState } from "./db/input-sync-state.js";
 import { Button } from "@/components/ui/button";
 import { Loader2, Circle } from "lucide-react";
 import { SyncUrlInput } from "./sync-url-input.js";

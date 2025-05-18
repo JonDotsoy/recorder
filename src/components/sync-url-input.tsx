@@ -7,6 +7,7 @@ import { useStore } from "@nanostores/react";
 import { syncingState } from "@/backup-service/states/syncing.js";
 import { updateUrl } from "@/backup-service/states/updateUrl.js";
 import classNames from "classnames";
+import { connectedState } from "@/backup-service/states/connected-state.js";
 
 export const SyncUrlInput: FC<{
   serviceURL?: ReadableAtom<string>;
@@ -15,11 +16,12 @@ export const SyncUrlInput: FC<{
   onUpdateUrl?: (url: string) => void;
 }> = ({
   serviceURL = serviceURLState,
-  connected,
+  connected = connectedState,
   syncing = syncingState,
   onUpdateUrl: onUpdateUrl = updateUrl,
 }) => {
   const isSyncing = useStore(syncing);
+  const isConnected = useStore(connected);
 
   return (
     <div x-name="sd" className="flex flex-col">
@@ -36,10 +38,10 @@ export const SyncUrlInput: FC<{
       <span className="flex items-center gap-2">
         <Badge
           className={classNames(badgeVariants({ variant: "secondary" }), {
-            "bg-green-200": connected?.get(),
+            "bg-green-200": isConnected,
           })}
         >
-          {connected?.get() ? "Connected" : "Not Connected"}
+          {isConnected ? "Connected" : "Not Connected"}
         </Badge>
         {isSyncing && (
           <Badge variant="secondary" className="animate-pulse">
