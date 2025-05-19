@@ -22,17 +22,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { TranscriptionButton } from "../transcription-button";
 
+/**
+ * Displays a card with information and actions for a single audio record.
+ *
+ * The component renders the record's key and size, and provides buttons for downloading, playing, deleting (with confirmation dialog), backing up, and viewing the transcription.
+ */
 export const RecordCard: FC<{
+  /** The record data to display, including metadata and file size. */
   record: RecordDTO;
-  onDownloadRecord: (key: string) => void;
-  onPlayRecord: (key: string) => void;
-  onDeleteRecord: (key: string) => void;
+  /** Optional callback invoked when the user clicks the "Download" button. Receives the record key as an argument. */
+  onDownloadRecord?: (key: string) => void | Promise<void>;
+  /** Optional callback invoked when the user clicks the "Play" button. Receives the record key as an argument. */
+  onPlayRecord?: (key: string) => void | Promise<void>;
+  /** Optional callback invoked when the user confirms deletion in the dialog. Receives the record key as an argument. */
+  onDeleteRecord?: (key: string) => void | Promise<void>;
+  /** Optional callback invoked when the user requests to view the transcription. Receives the record key as an argument. */
+  onOpenTranscription?: (key: string) => void | Promise<void>;
 }> = ({
   record,
   onDownloadRecord: downloadRecord,
   onPlayRecord: playRecord,
   onDeleteRecord: deleteRecord,
+  onOpenTranscription: openTranscription,
 }) => {
   return (
     <Card key={record.key}>
@@ -48,7 +61,7 @@ export const RecordCard: FC<{
         <div className="flex flex-row gap-1">
           <Button
             className="border px-4 py-1 rounded hover:shadow cursor-pointer"
-            onClick={() => downloadRecord(record.key)}
+            onClick={() => downloadRecord?.(record.key)}
             size={"sm"}
             variant={"outline"}
           >
@@ -56,7 +69,7 @@ export const RecordCard: FC<{
           </Button>
           <Button
             className="border px-4 py-1 rounded hover:shadow cursor-pointer"
-            onClick={() => playRecord(record.key)}
+            onClick={() => playRecord?.(record.key)}
             size={"sm"}
             variant={"outline"}
           >
@@ -79,13 +92,15 @@ export const RecordCard: FC<{
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction>Continue</AlertDialogAction>
+                  <AlertDialogAction onClick={() => deleteRecord?.(record.key)}>
+                    Continue
+                  </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
           </Button>
           <BackupButton key={record.key} record={record} />
-          {/* <TranscribeButton key={record.key} record={record} /> */}
+          <TranscriptionButton onOpen={() => openTranscription?.(record.key)} />
         </div>
       </CardContent>
     </Card>

@@ -6,6 +6,7 @@ import { BackupButton } from "./backup-button.js";
 import { TranscribeButton } from "./transcribe-button.js";
 import { RecordCard } from "./record-card.js";
 import { useMemo } from "react";
+import { downloadTranscription } from "@/backup-service/controllers/download-transcription.js";
 
 export const RecordList = () => {
   const isServiceAvailability = useStore(serviceAvailabilityState);
@@ -35,8 +36,11 @@ export const RecordList = () => {
     }, 10_000);
   };
 
-  const onDeleteRecord = (key: string) => {
-    confirm("¿Estás seguro de que quieres eliminar este registro?");
+  const onDeleteRecord = (key: string) => {};
+
+  const onOpenTranscription = async (key: string) => {
+    const transcriptionURL = await downloadTranscription(key);
+    window.open(transcriptionURL.toString(), "_blank");
   };
 
   const groupedRecords = useMemo(
@@ -65,6 +69,7 @@ export const RecordList = () => {
               onDownloadRecord={onDownloadRecord}
               onPlayRecord={onPlayRecord}
               onDeleteRecord={onDeleteRecord}
+              onOpenTranscription={onOpenTranscription}
             />
           ))}
         </div>
